@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -35,7 +36,55 @@ namespace SandBox.Pages
 
 		private void Next_Click(object sender, RoutedEventArgs e)
 		{
+			DataTable table = new DataTable();
+			DataColumn column;
+			DataRow row;
+			//
+			column = new DataColumn();
+			column.DataType = System.Type.GetType("System.String");
+			column.ColumnName = "产品编号";
+			table.Columns.Add(column);
+			//
+			column = new DataColumn();
+			column.DataType = System.Type.GetType("System.String");
+			column.ColumnName = "市场编号";
+			table.Columns.Add(column);
+			//
+			column = new DataColumn();
+			column.DataType = System.Type.GetType("System.String");
+			column.ColumnName = "数量";
+			table.Columns.Add(column);
+			//
+			column = new DataColumn();
+			column.DataType = System.Type.GetType("System.String");
+			column.ColumnName = "账期";
+			table.Columns.Add(column);
+			//
+			column = new DataColumn();
+			column.DataType = System.Type.GetType("System.String");
+			column.ColumnName = "售价";
+			table.Columns.Add(column);
+			//
+
+			// !!!
+			for (int i = 0; i <= 3; i++)
+			{
+				row = table.NewRow();
+				row["产品编号"] = i;
+				row["市场编号"] = i + 1;
+				row["数量"] = 2;
+				row["账期"] = 3;
+				row["售价"] = 20;
+				table.Rows.Add(row);
+			}
+
+			int year = (int)(App.Current as App).action.year;
+			int season = (int)(App.Current as App).action.season;
+			season = MainAction.ConvertSeason(season);
+			EnterOrderAction enterOrderAction = new EnterOrderAction((App.Current as App).accessDB, year, season, (App.Current as App).action.name);
+			enterOrderAction.addNewOrders(table);
 			(App.Current as App).action.Update();
+
 		}
 
 		private void Add_Click(object sender, RoutedEventArgs e)

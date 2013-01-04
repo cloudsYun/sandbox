@@ -214,6 +214,15 @@ namespace SandBox.Actions
 					season = Season.Season_END;
 					page = Page.LANPage_Player;
 				}
+
+                //设定用户名称与初始值
+                int useNum = (App.Current as App).accessDB.GetUserNumber(name);
+                if (useNum == 0)
+                {
+                    (App.Current as App).accessDB.AddNewUserList(name, "", "");
+                    useNum = (App.Current as App).accessDB.GetUserNumber(name);
+                }
+                (App.Current as App).accessDB.SetIniValue(useNum,(App.Current as App).accessDB.GetDefaultIniValue(useNum));
 			}
 			else 
 			{

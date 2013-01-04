@@ -1,26 +1,26 @@
-﻿PageIndex    PageClassName                   Title                    Progress
-===============================================================================
-LANPage_Player                  连接服务器               **
-LANPage_Admin                   建立服务器               **
-PlayerStatePage					玩家提交状态             ---
+﻿PageClassName                   Title                  
+======================================================
+LANPage_Player                  连接服务器            
+LANPage_Admin                   建立服务器            
+PlayerStatePage					玩家提交状态          
 
-NewYearPlanningPage             新年度规划会议           ***
-PutAdvertisementPage            广告投放                 ***
-EnterOrderPage                  登记订单                 *
-PayDutyPage                     支付税款                 ***
+NewYearPlanningPage             新年度规划会议        
+PutAdvertisementPage            广告投放              
+EnterOrderPage                  登记订单              
+PayDutyPage                     支付税款              
 
-ManageShortTermLoanPage         短期贷款管理			 *
-TransportMaterialPage           原材料入库               *
-OrderMaterialPage               原材料下单               *
-FinishProcessPage               更新生产                 ***            
-StartProcessPage                开始下批生产           
-GatheringPage                   更新应收款               
-DeliveryProductPage             按订单交货               
-DevelopProductPage              新产品研发投资           
-PayExpensePage                  支付行政管理费用         
+ManageShortTermLoanPage         短期贷款管理		  *
+TransportMaterialPage           原材料入库          
+OrderMaterialPage               原材料下单          
+FinishProcessPage               更新生产            
+StartProcessPage                开始下批生产        
+GatheringPage                   更新应收款          
+DeliveryProductPage             按订单交货          
+DevelopProductPage              新产品研发投资      
+PayExpensePage                  支付行政管理费用    
 
-ExploitMarketPage               开拓新市场
-ManageLongTermLoanPage          长期贷款管理
-PayUpKeepPage                   设备维护费支付
-DepreciationPage                计提折旧
-MarketAccessPage                领取新市场准入资格
+ExploitMarketPage               开拓新市场            
+ManageLongTermLoanPage          长期贷款管理          
+PayUpKeepPage                   设备维护费支付        
+DepreciationPage                计提折旧              
+MarketAccessPage                领取新市场准入资格    

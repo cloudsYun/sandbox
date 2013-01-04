@@ -18,6 +18,7 @@ namespace SandBox
 		{ 
 			action = new Actions.AppAction();
             accessDB = new AccessDB();
+            accessDB.DeleteAllRecord();
 		}
 	}
 

@@ -17,27 +17,11 @@ namespace SandBox.Actions
         }
         public bool setInitSeasonCash()
         {
-            int useNum = db.GetUserNumber(useName);
-            int cash = int.Parse(db.getCash(0, 0, useNum)); //获得上一季度现金
-            return setCash(cash.ToString());
+            return db.SetNewSeasonFinanceTarget(1,1,useNum);
         }
         public bool setNewSeasonCash()
         {
-            int previousSeason = 0;
-            int previousYear = 0;
-            if(season  == 1)
-            {
-                previousSeason = 4;
-                previousYear = year -1;
-            }
-            else
-            {
-                previousSeason = season -1;
-                previousYear = year;
-            }
-            int useNum = db.GetUserNumber(useName);
-            int cash = int.Parse(db.getCash(previousYear, previousSeason, useNum)); //获得上一季度现金
-            return setCash(cash.ToString());
+            return db.SetNewSeasonFinanceTarget(year,season,useNum);
         }
     }
 }

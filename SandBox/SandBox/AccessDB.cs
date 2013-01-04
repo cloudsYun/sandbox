@@ -67,7 +67,63 @@ namespace SandBox
                 return usr_num;
             }
         }
+        //清空数据库
+        public bool DeleteAllRecord()
+        {
+            string sql = "DELETE * FROM 财务指标季末记录";
+            OleDbCommand cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
 
+            sql = "DELETE * FROM 产品订单信息";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+
+            sql = "DELETE * FROM 产品库存";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+
+            sql = "DELETE * FROM 产品研发状态";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+
+            sql = "DELETE * FROM 筹资记录";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+
+            sql = "DELETE * FROM 订单获取完成状态";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+
+            sql = "DELETE * FROM 广告竞单";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+
+            sql = "DELETE * FROM 生产线状态";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+
+            sql = "DELETE * FROM 市场准入状态";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+            /*
+            sql = "DELETE * FROM 税费记录";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+            */
+            sql = "DELETE * FROM 应收款信息";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+
+            sql = "DELETE * FROM 原材料状态信息";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+            /*
+            sql = "DELETE * FROM 原材料订单信息";
+            cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+            */
+            return true;
+        }
         //读取默认初始值..参数结构如何设计
         public IniValue GetDefaultIniValue(int UsrNum) 
         {
@@ -290,6 +346,8 @@ namespace SandBox
             IniValueEntity.UncollectibleAccountsIni.Columns.Add("已过时间");
             IniValueEntity.UncollectibleAccountsIni.Columns.Add("是否完成收款");
             IniValueEntity.UncollectibleAccountsIni.Columns.Add("应收款金额");
+            IniValueEntity.UncollectibleAccountsIni.Columns.Add("开始年份");
+            IniValueEntity.UncollectibleAccountsIni.Columns.Add("开始季度");
             sql = "SELECT 财务指标编号,收款周期,已过时间,是否完成收款,应收款金额 FROM 应收款初始信息表";
             adapter = new OleDbDataAdapter(sql, conn);
             datatable = new DataTable();
@@ -304,6 +362,8 @@ namespace SandBox
                 row["已过时间"] = datatable.Rows[i][2];
                 row["是否完成收款"] = Convert.ToInt32(datatable.Rows[i][3]); 
                 row["应收款金额"] = datatable.Rows[i][4];
+                row["开始年份"] = 1;
+                row["开始季度"] = 1;
                 IniValueEntity.UncollectibleAccountsIni.Rows.Add(row);
             }
             //原材料信息 
@@ -458,11 +518,48 @@ namespace SandBox
             //
             return true;
         }
+        
+
+
         //***************连云*************************//
         //获取资产信息的函数？？
 
 
         //****现金处理****
+
+        public bool SetNewSeasonFinanceTarget(int year, int season, int UsrNum)//新季度开始前插入财务指标信息
+        {
+            int LastYear;
+            int LastSeason;
+            if(year==1&&season==1)
+            {
+                LastYear=0;
+                LastSeason=0;
+            }
+            else if (season == 1 && year > 1)
+            {
+                LastYear=year-1;
+                LastSeason=4;
+            }
+            else
+            {
+                LastYear=year;
+                LastSeason=season-1;
+            }
+            string sql = "SELECT * FROM 财务指标季末记录 WHERE (用户编号=" + UsrNum.ToString() + ") AND (年份=" + LastYear.ToString()
+                + ") AND (季度=" + LastSeason.ToString() + ")";
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+
+            for (int i = 0; i < datatable.Rows.Count;i++ )
+            {
+                datatable.Rows[i][1] = year;
+                datatable.Rows[i][2] = season;
+
+            }
+            return InsertIniValue("财务指标季末记录", datatable);
+        }
         public string getCash(int year,int season,int UsrNum) //获取现金
         {
             string sql = "SELECT 财务指标值 FROM 财务指标季末记录 WHERE ((年份=" 
@@ -474,7 +571,7 @@ namespace SandBox
 
             if (datatable.Rows.Count == 0)//无该现金值
             {
-                return "-1";
+                return "No";
             }
             else//返回现金值
             {
@@ -499,14 +596,12 @@ namespace SandBox
 
 
             //老师输入的订单信息
-        /*
         public bool recordAdvertiseMentInfo(DataTable newOrders) //记录订单信息
         {
             //!!!!!newOrders的列名有  产品编号，市场编号，数量，账期，售价
             InsertIniValue("产品订单信息", newOrders);
             return true;
         }
-         * */
         public DataTable getProductOrders() //返回所有订单数据
         {
             string sql = "select * from 产品订单信息";
@@ -517,7 +612,6 @@ namespace SandBox
         }
         public DataTable getProductOrders(string orderID) //返回某个订单数据
         {
-            //（完成测试）
             string sql = "select * from 产品订单信息 where 订单编号="+orderID;
             DataTable data = new DataTable();
             OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
@@ -526,21 +620,13 @@ namespace SandBox
         }
         public bool addNewOrders(DataTable orders)  //插入新的订单
         {
-            //!!!!!orders的列名有  产品编号，市场编号，数量，账期，售价(完成测试)
-            try
-            {
-                InsertIniValue("产品订单信息", orders);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
-            }
+            //!!!!!orders的列名有  产品编号，市场编号，数量，账期，售价
+            InsertIniValue("产品订单信息", orders);
+            return true;
         }
         public bool deleteOrders(string orderID)    //删除编号为orderID的订单
         {
-            string sql = "DELETE FROM 产品订单信息 WHERE 订单编号=" + orderID;
+            string sql = "DELETE * FROM 产品订单信息 WHERE 订单编号=" + orderID;
             OleDbCommand cmd = new OleDbCommand(sql, conn);
             cmd.ExecuteScalar();
             return true;
@@ -579,19 +665,30 @@ namespace SandBox
             return getFinanceServiceInfo(UsrNum, "短期贷款");
 
         }
-
+        /*
+        public bool deleteShortTermLoan(string shortloanID) //删除一条短期贷款记录
+        {
+            
+            return true;
+        }
+        public bool addShortTermLoan(string[] shortloan)   //在数据库中增加一条借款记录
+        {
+            return true;
+        }
+         */
         public DataTable getFinanceServiceInfo(int UsrNum, string ServiceKind)//获取某用户某种类型的贷款
         {
-            string sql = "SELECT * FROM 筹资记录 WHERE (筹资类型=" + ServiceKind + ") AND (用户编号=" + UsrNum.ToString() + ")";
+            //string sql = "SELECT * FROM 筹资记录 WHERE 筹资类型=" + ServiceKind.ToString() + " AND 用户编号=" + UsrNum.ToString();
+            string sql = "SELECT * FROM 筹资记录 WHERE 用户编号=" + UsrNum.ToString() + " AND " + "(筹资类型='" + ServiceKind.ToString()+"')";
             DataTable datatable = new DataTable();
             OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
             adapter.Fill(datatable);
             return datatable;
         }
-        public bool deleteFinanceServiceInfo(int UsrNum, string ServiceCode)//删除某条贷款信息
-        //ServiceCode是筹资编号
+        public bool deleteFinanceServiceInfo(int UsrNum,string ServiceCode)//删除某条贷款信息
+            //ServiceCode是筹资编号
         {
-            string sql = "DELETE FROM 筹资记录 WHERE (筹资编号=" + ServiceCode + ") AND (用户编号=" + UsrNum.ToString() + ")";
+            string sql = "DELETE FROM 筹资记录 WHERE (筹资编号=" + ServiceCode+") AND (用户编号="+UsrNum.ToString()+")";
             OleDbCommand cmd = new OleDbCommand(sql, conn);
             cmd.ExecuteScalar();
             return true;
@@ -601,6 +698,8 @@ namespace SandBox
             InsertIniValue("筹资记录", ServiceInfo);
             return true;
         }
+
+        //原材料信息
         public DataTable getTransportMaterial(int UsrNum) //获得所有未到库的原材料订单
         {
             string sql = "SELECT * FROM 原料订单信息 WHERE (用户编号=" + UsrNum.ToString() + ") AND (是否已到库=false)";
@@ -611,43 +710,30 @@ namespace SandBox
             //处理
             return unGetMaterial;
         }
-        /*
-        public bool deleteShortTermLoan(string shortloanID) //删除一条短期贷款记录
-        {
-            return true;
-        }
-        public bool addShortTermLoan(string[] shortloan)   //在数据库中增加一条借款记录
-        {
-            return true;
-        }
-        */
-
-        //原材料信息
-        public bool addMaterial(DataTable Order)
+        public bool addMaterial(DataTable Order)//增加订单
         {//order:原材料编号，用户编号，数量，下单年份，下单季度，是否到库
             InsertIniValue("原料订单信息", Order);
 
             //加入订单的同时更新原材料状态信息中对应的 订单数量信息
-            string getSql = "SELECT 订单数量 FROM 原材料状态信息 WHERE （原材料编号=" + Order.Rows[0][0].ToString() + ") AND (用户编号=" + Order.Rows[0][1].ToString() +
-                ")";
+            string getSql = "SELECT 订单数量 FROM 原材料状态信息 WHERE 原材料编号=" + Order.Rows[0][0].ToString() + " AND 用户编号=" + Order.Rows[0][1].ToString();
             DataTable datatable = new DataTable();
             OleDbDataAdapter adapter = new OleDbDataAdapter(getSql, conn);
             adapter.Fill(datatable);
-            int OrderNum = int.Parse(datatable.Rows[0][0].ToString()) + int.Parse(Order.Rows[0][2].ToString());
-            string setSql = "UPDATE 原材料信息 SET 订单数量=" + OrderNum.ToString() + "WHERE （原材料编号=" + Order.Rows[0][0].ToString() + ") AND (用户编号=" + Order.Rows[0][1].ToString() +
-                ")";
+            int OrderNum = int.Parse(datatable.Rows[0][0].ToString())+int.Parse(Order.Rows[0][2].ToString());
+            string setSql = "UPDATE 原材料状态信息 SET 订单数量=" + OrderNum.ToString() + " WHERE (原材料编号=" + Order.Rows[0][0].ToString() + ") AND 用户编号=" + Order.Rows[0][1].ToString();
             OleDbCommand cmd = new OleDbCommand(setSql, conn);
             cmd.ExecuteScalar();
-            return true;
-        }
-        public bool setMaterialGeting(string ordersID, int year, int season)  //设定对应ID的原材料到库
+             return true;
+         }
+
+        public bool setMaterialGeting(string ordersID, int year, int season)  //设定对应ID的原材料到库，并且自动入库，包含了setMaterialInStore的信息
         {
-            string sql = "Select * FROM 原料订单信息 WHERE 原料订单编号=" + ordersID;
+            string sql="Select * FROM 原料订单信息 WHERE 原料订单编号="+ordersID;
             DataTable datatable = new DataTable();
             OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
             adapter.Fill(datatable);
-            string GetMaterialCountSql = "SELECT 原材料数量,订单数量,在途数量 FROM 原材料状态信息 WHERE (原材料编号=" + datatable.Rows[0][1].ToString() + ") AND (用户编号="
-                + datatable.Rows[2][0].ToString() + ")";
+            string GetMaterialCountSql="SELECT 原材料数量,订单数量,在途数量 FROM 原材料状态信息 WHERE (原材料编号="+datatable.Rows[0][1].ToString()+") AND (用户编号="
+                +datatable.Rows[2][0].ToString()+")";
             DataTable temp_datatable = new DataTable();
             OleDbDataAdapter temp_adapter = new OleDbDataAdapter(GetMaterialCountSql, conn);
             int CurrentNum = int.Parse(temp_datatable.Rows[0][0].ToString());
@@ -655,11 +741,11 @@ namespace SandBox
             int OnTheWayNum = int.Parse(temp_datatable.Rows[0][2].ToString());
 
             int IncreaseNum = int.Parse(datatable.Rows[3][0].ToString());
+            
 
-
-            string UpdateMaterial1CountSql = "UPDATE 原料状态信息 SET 原材料数量=" + (CurrentNum + IncreaseNum).ToString()
-                + ",订单数量=" + (OrderNum - IncreaseNum).ToString() + "WHERE (原材料编号=" + datatable.Rows[0][1].ToString() + ") AND (用户编号="
-                + datatable.Rows[2][0].ToString() + ")";
+            string UpdateMaterial1CountSql = "UPDATE 原料状态信息 SET 原材料数量="+(CurrentNum+IncreaseNum).ToString()
+                +",订单数量="+(OrderNum-IncreaseNum).ToString()+"WHERE (原材料编号="+datatable.Rows[0][1].ToString()+") AND (用户编号="
+                +datatable.Rows[2][0].ToString()+")";
 
             string UpdateMaterial2CountSql = "UPDATE 原料状态信息 SET 原材料数量=" + (CurrentNum + IncreaseNum).ToString()
                 + ",在途数量=" + (OnTheWayNum - IncreaseNum).ToString() + "WHERE (原材料编号=" + datatable.Rows[0][1].ToString() + ") AND (用户编号="
@@ -686,7 +772,7 @@ namespace SandBox
                 }
                 else return false;
             }
-            else
+            else 
             {
                 if (SeasonNum >= 2)
                 {
@@ -702,9 +788,8 @@ namespace SandBox
                 }
                 else return false;
             }
-
+            
         }
-
         public bool UpdateOnWayNum(int UsrNum)//更新在途信息，用于新一季度时，
         {
             string getSql = "SELECT 订单数量,在途数量 FROM 原材料状态信息 WHERE 用户编号=" + UsrNum.ToString();
@@ -730,26 +815,36 @@ namespace SandBox
             return true;
 
         }
-
-        public DataTable getMaterialInStore()           //获得所有原材料的库存剩余数量
+        public DataTable getMaterialInStore(int UsrNum)           //获得所有原材料的库存剩余数量
         {
+            string sql = "SELECT 原材料编号,原材料数量 FROM 原材料状态信息 WHERE 用户编号=" + UsrNum.ToString();
             DataTable material = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(material);
             //处理
-            return material;
+            return material;//material的第一列是 原材料编号，第二列是 原材料数量
         }
         public DataTable getMaterialInfo()          //获得原材料的静态信息
         {
+            string sql = "SELECT 原材料名称,原材料价格,原材料订单期 FROM 原材料信息";
             DataTable materialInfo = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(materialInfo);
             //处理
-            return materialInfo;
+            return materialInfo;//列名：原材料名称,原材料价格,原材料订单期
         }
-        public bool setMaterialInStore(string[] material)   //设定四种原材料的库存剩余信息
+        public bool setMaterialInStore(string[] material)   //设定四种原材料的库存剩余信息//未写
         {
             return true;
         }
-        public bool addNewMaterialOrders(string rawID, string number, string year, string season)   //给出原材料编号和原材料个数
+        public bool addNewMaterialOrders(string rawID, string number, string year, string season,int UsrNum)   //给出原材料编号和原材料个数
         {
             //用户编号随便设吧回头再说
+            string sql = "INSERT INTO 原料订单信息 (原材料编号,用户编号,数量,下单年份,下单季度,是否已到库) VALUES ('"
+                + rawID + "','" + UsrNum.ToString() + "','" + number + "','" + year + "','" + season + "','false')";
+            Console.WriteLine(sql);
+            OleDbCommand cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteNonQuery();
             return true;
         }
 
@@ -782,148 +877,283 @@ namespace SandBox
         }
 
         //生产线信息
-        public DataTable getBusyProcessingLine()       //获得所有正在生产的生产线详细信息 
+        public DataTable getBusyProcessingLine(int UsrNum)       //获得所有正在生产的生产线详细信息 
         {
-            DataTable temp = new DataTable();
+            string sql = "SELECT 生产线编号,生产线类型,厂房编号,当前产品生产时长,产品编号,余值 FROM 生产线状态 WHERE 用户编号="+UsrNum.ToString()
+                +"AND 生产线状态=生产";
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
 
-            return temp;
+            return datatable;//生产线编号,生产线类型,厂房编号,当前产品生产时长,产品编号,余值
         }
-        public bool setProcessingLineState(string processLineID, string state)                //设定生产线状态(ID,当前产品生产时长)
+
+        public bool setProcessingLineState(string processLineID, string state)//设定生产线状态(ID,当前产品生产时长)//未写
         {
             //产品时长为0表示空闲？
             return true;
         }
         public DataTable getProductionLineInfo()        //获得生产线的静态信息
         {
-            DataTable temp = new DataTable();
+            string sql = "SELECT * FROM 生产线信息";
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
 
-            return temp;
+            return datatable;//
         }
-        public DataTable getAProcessingLineState(string lineID) //获得ID为lineID的生产线状态（仅有一条）
+        public DataTable getAProcessingLineState(string lineID,int UsrNum) //获得ID为lineID的生产线状态（仅有一条）
         {
-            DataTable temp = new DataTable();
+            string sql = "SELECT 生产线编号,生产线类型,厂房编号,当前产品生产时长,产品编号,生产线状态,余值 FROM 生产线状态 WHERE 用户编号=" + UsrNum.ToString()
+                + "AND 生产线编号="+lineID;
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
 
-            return temp;
+            return datatable;//生产线编号,生产线类型,厂房编号,当前产品生产时长,产品编号,生产线状态,余值
         }
-        public bool deleteAProcessingLine(string lineID)       //删除一个ID为lineID的生产线
+        public bool deleteAProcessingLine(string lineID)       //删除一个ID为lineID的生产线//未写
         {
             return true;
         }
-        public DataTable getFreeProductLine()           //获得所有空闲的生产线
+        public DataTable getFreeProductLine(int UsrNum)           //获得所有空闲的生产线
         {
-            DataTable temp = new DataTable();
-
-            return temp;
+            string sql = "SELECT 生产线编号,生产线类型,厂房编号,产品编号,生产线状态 FROM 生产线状态 WHERE 用户编号=" + UsrNum.ToString()
+                + "AND (当前产品生产时长=0 OR 生产线状态<>生产";
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+            return datatable;//生产线编号,生产线类型,厂房编号,产品编号,生产线状态
         }
-        public DataTable getAllProductLine()    //获得所有的生产线列表
+        public DataTable getAllProductLine(int UsrNum)    //获得所有的生产线列表
         {
-            DataTable temp = new DataTable();
-
-            return temp;
+            string sql = "SELECT 生产线编号,生产线类型,厂房编号,产品编号,生产线状态 FROM 生产线状态 WHERE 用户编号=" + UsrNum.ToString();
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+            return datatable;//生产线编号,生产线类型,厂房编号,产品编号,生产线状态
         }
-        public DataTable getProductTypeInfo(string productType)     //获得对应生产线类型的所有信息数据
+
+        public bool setProductLineState(string productlineID, string productId, string producingTime) //开始下一批生产前，设定新的生产线状态//待写
         {
-            DataTable temp = new DataTable();
-
-            return temp;
+            return true;
         }
-       
+        
+        
         //产品库存信息
-        public DataTable getProductInStore()        //获得所有的库存信息
+        public DataTable getProductInStore(int UsrNum)        //获得所有的库存信息
         {
-            DataTable temp = new DataTable();
-
-            return temp;
+            string sql = "SELECT * FROM 产品库存 WHERE 用户编号=" + UsrNum.ToString();
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+            return datatable;
         }
-        public bool setProductInStore(string[] productInStore)  //输入为每种产品(共四种)的新库存数值。给对应库存值设定为新数
+        public bool setProductInStore(string[] productInStore)  //输入为每种产品(共四种)的新库存数值。给对应库存值设定为新数//未写
         {
             return true;
         }
-
+        public DataTable getProductTypeInfo(string productType)     //获得对应产品型的所有信息数据
+        {
+            string sql = "SELECT 产品编号,产品名称,加工费,研发周期,每季度研发投资 FROM 产品信息";
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+            return datatable;//产品编号,产品名称,加工费,研发周期,每季度研发投资
+        }
         
         //应收款信息
-        public DataTable getAllGathering()       //获得所有未结清的未收款
+        public DataTable getAllGathering(int UsrNum)       //获得所有未结清的未收款
         {
-            DataTable temp = new DataTable();
-
-            return temp;
+            string sql = "SELECT 应收款信息编号,收款周期,已过时间,应收款金额 FROM 应收款信息 WHERE (用户编号=" + UsrNum.ToString()+") AND (是否完成收款=false)";
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+            
+            return datatable;
         }
-        public bool setGathering(string gatheringID)    //将对应的ID的应收款项设定为结清
+
+        public bool setGathering(string gatheringID,int UsrNum)    //将对应的ID的应收款项设定为结清
         {
+            string sql = "UPDATE 应收款信息 SET 是否完成收款=true WHERE (应收款信息编号=" + gatheringID+") AND (用户编号="+ UsrNum.ToString()+")";
+            OleDbCommand cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
             return true;
         }
-
-        public bool setProductLineState(string productlineID, string productId, string producingTime) //开始下一批生产后，设定新的生产线状态
+        public bool UpdateAllGathering(int UsrNum,int year,int season)
         {
-            return true;
-        }
+            string sql = "SELECT 应收款信息编号 FROM 应收款信息 WHERE 用户编号=" + UsrNum.ToString()+" AND 是否完成收款=false";
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
 
+            for (int i = 0; i < datatable.Rows.Count; i++)
+            {
+                this.UpdateOneGathering(int.Parse(datatable.Rows[i][0].ToString()), UsrNum, year, season);
+            }
+
+                return true;
+        }
+        public bool UpdateOneGathering(int CodeNum,int UsrNum,int year,int season)//更新应收款,包括更新cash信息
+        {
+            string sql = "Select 收款周期,已过时间,是否完成收款,应收款金额,开始年份,开始季度 FROM 应收款信息 WHERE 应收款信息编号="
+                + CodeNum.ToString() + " AND 用户编号=" + UsrNum.ToString();
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+            if (bool.Parse(datatable.Rows[0][2].ToString()) == true)
+            {
+                return true;
+            }
+            else
+            {
+                int HavePaseSeasonNum = 4 * (year - int.Parse(datatable.Rows[0][4].ToString())) + season - int.Parse(datatable.Rows[0][5].ToString());
+                if (HavePaseSeasonNum == int.Parse(datatable.Rows[0][0].ToString()))
+                {
+                    string SetSql = "UPDATE 应收款信息 SET 已过时间=" + HavePaseSeasonNum.ToString() +
+                        ",是否完成收款=true WHERE 应收款信息编号=" + CodeNum.ToString() + " AND 用户编号=" + UsrNum.ToString();
+                    OleDbCommand cmd = new OleDbCommand(SetSql, conn);
+                    cmd.ExecuteScalar();
+                    int cash = int.Parse(this.getCash(year, season, UsrNum)) + int.Parse(datatable.Rows[0][3].ToString());
+                    this.setCash(cash.ToString(), year, season, UsrNum);
+                    return true;
+                }
+                else
+                {
+                    string SetSql = "UPDATE 应收款信息 SET 已过时间=" + HavePaseSeasonNum.ToString()+
+                        "WHERE 应收款信息编号=" + CodeNum.ToString() + " AND 用户编号=" + UsrNum.ToString();
+                    OleDbCommand cmd = new OleDbCommand(SetSql, conn);
+                    cmd.ExecuteScalar();
+                    return true;
+                }
+            }
+            
+        }
+        public int GetOneYearGatheringSum(int year,int UsrNum)//返回
+        {
+            string sql= "SELECT 应收款金额 FROM 应收款信息 WHERE 开始年份="+year.ToString()+" AND 用户编号="+UsrNum.ToString();
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+
+            adapter.Fill(datatable);
+            int sum = 0;
+            for (int i = 0; i < datatable.Rows.Count; i++)
+            {
+                sum += int.Parse(datatable.Rows[i][0].ToString());
+            }
+            return sum;            
+        }
         
 
+        
         //产品信息
-        public bool setProductInStore(string type, string newNumber)    //设定库存中type类型产品的新数量
+        public bool setProductInStore(string type, string newNumber)    //设定库存中type类型产品的新数量//未写
         {
             return true;
         }
-        public DataTable getDevelopProductInfo()        //获得产品研发状态
+        public DataTable getDevelopProductInfo(int UsrNum)        //获得产品研发状态
         {
-            DataTable developProductInfo = new DataTable();
+            string sql = "SELECT 产品编号,已投资年限,是否研发成功,投资起始年份,投资起始季度,是否正在研发 FROM 产品研发状态 WHERE 用户编号="+UsrNum.ToString();
+            
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
 
-            return developProductInfo;
+            return datatable;//产品编号,已投资年限,是否研发成功,投资起始年份,投资起始季度,是否正在研发
+           
         }
         public DataTable getProductInfo()               //获得产品信息
         {
-            DataTable productInfo = new DataTable();
+            string sql = "SELECT 产品编号,产品名称,加工费,研发周期,每季度研发投资 FROM 产品信息";
 
-            return productInfo;
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+
+            return datatable;
         }
 
         //市场准入状态
-        public DataTable getMarketAccessInfo()      //查询市场准入状态表
+        public DataTable getMarketAccessInfo(int UsrNum)      //查询市场准入状态表
         {
-            DataTable accessInfo = new DataTable();
 
-            return accessInfo;
-        }
-        public DataTable getMarketInfo()            //获得市场信息
-        {
-            DataTable marketInfo = new DataTable();
+            string sql = "SELECT 市场编号,已投资年限,是否获取准入资格,投资起始年份,完成投资年份,是否正在投资 FROM 市场准入状态 WHERE 用户编号=" + UsrNum.ToString();
 
-            return marketInfo;
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+
+            return datatable;//市场编号,已投资年限,是否获取准入资格,投资起始年份,完成投资年份,是否正在投资
         }
-        public bool setMarketAccessInfo(string marketID, string marketTime, string productName, string year)    //设定新的市场状态，开始新的市场开辟
+        public DataTable getMarketInfo()            //获得全部市场信息
         {
-            //市场类型、开拓所需时间、产品名称、开始年份
+            string sql = "SELECT 市场编号,市场名称,所需投资年限,每年投资金额 FROM 市场信息";
+
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            adapter.Fill(datatable);
+
+            return datatable;//市场编号,市场名称,所需投资年限,每年投资金额
+        }
+        
+        public bool setMarketAccessInfo(string marketID, int UsrNum, int year)//设定新的市场状态，开始新的市场开辟
+        {
+            //市场编号、开拓市场时间、开始年份
+            string sql = "UPDATE 市场准入状态 SET 投资起始年份="+year.ToString()+",是否正在投资=true,已投资年份=1 WHERE (市场编号="
+                +marketID+") AND (用户编号="+UsrNum.ToString()+")";
+            OleDbCommand cmd = new OleDbCommand(sql, conn);
+            cmd.ExecuteScalar();
+            
             return true;
         }
-        public bool setMarketAccessState(string marketID)
+        public bool setMarketAccessState(string marketID,int UsrNum,int year)//更新某市场投资情况
         {
             //更新已经投资的时间
-            return true;
+            string getSql = "SELECT 是否正在投资,投资起始年份,已投资年份 FROM 市场准入状态 WHERE (用户编号=" + UsrNum 
+                + ") AND (市场编号="+marketID+")";
+            DataTable datatable = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(getSql, conn);
+            adapter.Fill(datatable);
+
+            string getSqlFromInfo = "SELECT 所需投资年份 FROM 市场信息 WHERE 市场编号=" + marketID;
+            DataTable new_datatable = new DataTable();
+            OleDbDataAdapter new_adapter = new OleDbDataAdapter(getSqlFromInfo, conn);
+            adapter.Fill(new_datatable);
+
+            int NeededYear = int.Parse(new_datatable.Rows[0][0].ToString());//所需投资年份
+            int StartYear=int.Parse(datatable.Rows[0][1].ToString());//投资起始年份
+            int PassedYear=int.Parse(datatable.Rows[0][2].ToString());//之前已投资年份
+            if (bool.Parse(datatable.Rows[0][0].ToString()) == false)
+            {
+                return true;//无需更新
+            }
+            else 
+            {
+                
+                if((year-StartYear+1)==NeededYear)//已经完成
+                {
+                    string sql = "UPDATE 市场准入状态 SET 已投资年限="+NeededYear.ToString()+",完成投资年限="+year.ToString()+
+                        ",是否获取准入资格=true,是否正在投资=false WHERE (用户编号=" + UsrNum +  ") AND (市场编号=" + marketID + ")";
+                    OleDbCommand cmd = new OleDbCommand(sql, conn);
+                    cmd.ExecuteScalar();
+                    return true;
+
+                }
+                else if((year-StartYear+1)<NeededYear)//未完成
+                {
+                    string sql = "UPDATE 市场准入状态 SET 已投资年限=" + (year - StartYear + 1).ToString() 
+                        +" WHERE (用户编号=" + UsrNum + ") AND (市场编号=" + marketID + ")";
+                    OleDbCommand cmd = new OleDbCommand(sql, conn);
+                    cmd.ExecuteScalar();
+                    return true;
+                }
+                else
+                {
+                    return false;//数据库源数据错误
+                }
+            }
+
         }
 
-        //=================1-4晚饭后添加的函数============
-
-
-        internal DataTable getLongTermLoan()                        //获得长期贷款
-        {
-            throw new NotImplementedException();
-        }
-
-        internal bool deleteLongTermLoan(string p)                  //删除一条长期贷款记录
-        {
-            throw new NotImplementedException();
-        }
-
-        internal bool addLongTermLoan(string[] longLoanInfo)        //在数据库中增加一条借款记录
-        {
-            throw new NotImplementedException();
-        }
-
-
-        internal DataTable getAllUnDeliveryOrders()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

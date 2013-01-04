@@ -57,26 +57,16 @@ namespace SandBox.Pages
 		{
 			if (TextBox_Amount.Text == "")
 			{ 
-				(App.Current as App).action.WarningBox("请输入金额并确认");
+				(App.Current as App).action.WarningBox("请输入金额");
 				return;
 			}
 
-            int year = (int)(App.Current as App).action.year;
-            int season = (int)(App.Current as App).action.season;
-            season = MainAction.ConvertSeason(season);
-            NewSeasonCountingAction newSeasonCountingAction = new NewSeasonCountingAction((App.Current as App).accessDB, year, season);
-            if (year == 1 && season == 1)
-            {
-                newSeasonCountingAction.setInitSeasonCash();
-            }
-            else
-            {
-                newSeasonCountingAction.setNewSeasonCash();
-            }
-            
-            PutAdvertisementAction putAdvertisementAction = new PutAdvertisementAction((App.Current as App).accessDB, year, season);
-            putAdvertisementAction.subtracteAdvertisement(TextBox_Amount.Text);
+			int year = (int)(App.Current as App).action.year;
+			int season = (int)(App.Current as App).action.season;
+			season = MainAction.ConvertSeason(season);
 
+			PutAdvertisementAction putAdvertisementAction = new PutAdvertisementAction((App.Current as App).accessDB, year, season, (App.Current as App).action.name);
+			putAdvertisementAction.subtracteAdvertisement(TextBox_Amount.Text);
 			(App.Current as App).action.Update();
 		}
 

@@ -93,9 +93,16 @@
     </ApplicationDefinition>
     <Compile Include="AccessDB.cs" />
     <Compile Include="Actions\AppAction.cs" />
+    <Compile Include="Actions\DeliveryProductAction.cs" />
+    <Compile Include="Actions\EnterOrderAction.cs" />
+    <Compile Include="Actions\FinishProcessAction.cs" />
+    <Compile Include="Actions\GatheringAction.cs" />
     <Compile Include="Actions\MainAction.cs" />
     <Compile Include="Actions\NewSeasonCountingAction.cs" />
+    <Compile Include="Actions\PayDutyAction.cs" />
     <Compile Include="Actions\PutAdvertisementAction.cs" />
+    <Compile Include="Actions\ShortTermLoanAction.cs" />
+    <Compile Include="Actions\TransportMaterialAction.cs" />
     <Compile Include="Actions\Types.cs" />
     <Compile Include="DashWindow.xaml.cs">
       <DependentUpon>DashWindow.xaml</DependentUpon>

@@ -8,7 +8,7 @@
 	Title="原材料入库">
 
     <Grid>
-    	<DataGrid Margin="73,73,66,80"/>
+		<DataGrid x:Name="transportMaterialsDateGrid" Margin="73,73,66,80"/>
     	<TextBlock Height="19" Margin="74,54,139,0" TextWrapping="Wrap" Text="上期原材料订单" VerticalAlignment="Top"/>
 
 		<Viewbox x:Name="Help"

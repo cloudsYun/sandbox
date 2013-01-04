@@ -21,6 +21,10 @@ namespace SandBox.Actions
             useName = u;
             useNum = db.GetUserNumber(useName);
         }
+        public int getUseNum()
+        {
+            return useNum;
+        }
         public int getCash()
         {
             int useNum = db.GetUserNumber(useName);
