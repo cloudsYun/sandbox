@@ -30,10 +30,12 @@
                 <ToolTip Foreground="White" Background="Black" Opacity="0.8">
                     <StackPanel>
                         <TextBlock Width="auto" MaxWidth="450" Height="auto" FontSize="12pt" Margin="0,0,0,4">
-						Title
+						按订单交货
                         </TextBlock>
                         <TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
-                        Content
+                        <LineBreak/>
+                        选择要交货的订单。<LineBreak/>
+                        注意：只可交货一个完整的定单，不可分批。
                         </TextBlock>
                     </StackPanel>
                 </ToolTip>

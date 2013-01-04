@@ -14,10 +14,6 @@
 		</Grid.RowDefinitions>
 
 		<Grid VerticalAlignment="Center" Grid.Row="0" MaxWidth="300">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
-				<ColumnDefinition Width="auto"/>
-			</Grid.ColumnDefinitions>
 
 			<TextBox x:Name="TextBox_Amount_Bg" Height="auto" TextWrapping="Wrap" VerticalAlignment="Center" Margin="8"
 					 Foreground="{StaticResource SBBrush_Gray}" Text="广告投放额度" IsReadOnly="True"/>
@@ -25,10 +21,6 @@
 			<TextBox x:Name="TextBox_Amount" Height="auto" TextWrapping="Wrap" VerticalAlignment="Center" Margin="8"
 					 TextChanged="Amount_Changed" Background="{x:Null}"/>
 
-			<Button x:Name="ConfirmAmount" Content="确定金额" Grid.Column="1"
-					Height="23" Width="54pt" HorizontalAlignment="Right" Margin="8"
-					Style="{DynamicResource ButtonStyle_Common}"
-					Click="ConfirmAmount_Click"/>
 		</Grid>
 
 		<Viewbox Grid.Row="1">
@@ -37,7 +29,7 @@
 					<Rectangle Fill="{StaticResource SBBrush_Blue}" Visibility="Visible" />
 				</Grid>
 				<Path Data="M45.045841,21.857L54.578999,30.978927 42.310001,32.698998z M0,11.493745L49.73999,11.493745 42.159912,19.043793 38.869873,37.364696 59.609863,32.31424 64,28.19399 64,58.675439 28.609863,58.675439 28.609863,74.95575 17.77002,58.675439 0,58.675439z M60.637646,5.803L70.311996,15.6525 57.138165,28.589 57.033463,26.432716 53.749081,25.134267 53.769081,22.852979 50.483437,21.81144 50.206097,19.229338 47.471001,18.744919z M67.668053,0.00010204315C68.20433,-0.0048885345,68.704277,0.17327404,69.068565,0.54583263L75.919136,7.5170381C76.749199,8.3637204,76.559212,9.8973943,75.494858,10.949697L74.045631,12.374001 64.179001,2.329525 65.630531,0.90374184C66.229004,0.31569862,66.978554,0.0065193176,67.668053,0.00010204315z" 
-					  Stretch="Uniform" Fill="#FFFFF4F4" Width="186" Height="186" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5"/>
+					  Stretch="Uniform" Fill="#FFFFFFFF" Width="186" Height="186" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5"/>
 			</Grid>
 		</Viewbox>
 

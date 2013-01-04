@@ -41,7 +41,9 @@
 							原材料下单
 						</TextBlock>
 						<TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
-							帮助内容
+                            <LineBreak/>
+                            提示：<LineBreak/>
+							原料需要提前下订单。请注意订料提前期。
 						</TextBlock>
 					</StackPanel>
 				</ToolTip>

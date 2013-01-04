@@ -24,8 +24,10 @@
 						更新应收款
                         </TextBlock>
                         <TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
-                        这项工作针对一年中的应收款。<LineBreak/>
-                        这一部分是先前已经交货的价值。当你更新应收账期时，将所有的应收款向现金区移动。当进入现金区表明应收款已经收到。<LineBreak/>
+                        <LineBreak/>
+                        更新应收款只针对之前已经交货的订单。<LineBreak/>
+                        当你更新应收账期时，将所有的应收款向现金区移动。<LineBreak/>
+                        当进入现金区表明应收款已经收到。<LineBreak/>
                         <LineBreak/>
                         这一步由系统自动完成。<LineBreak/>
                         </TextBlock>

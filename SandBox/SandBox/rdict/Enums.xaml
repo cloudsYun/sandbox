@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:sys="clr-namespace:System;assembly=mscorlib"
+					xmlns:action="clr-namespace:SandBox.Actions">
+
+	<ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="EnumMaterial">
+		<ObjectDataProvider.MethodParameters>
+			<x:Type TypeName="action:Material" />
+		</ObjectDataProvider.MethodParameters>
+	</ObjectDataProvider>
+
+	<ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="EnumProduct">
+		<ObjectDataProvider.MethodParameters>
+			<x:Type TypeName="action:Product" />
+		</ObjectDataProvider.MethodParameters>
+	</ObjectDataProvider>
+	
+	<ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="EnumMarket">
+		<ObjectDataProvider.MethodParameters>
+			<x:Type TypeName="action:Market" />
+		</ObjectDataProvider.MethodParameters>
+	</ObjectDataProvider>
+
+</ResourceDictionary>

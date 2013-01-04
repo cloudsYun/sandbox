@@ -93,6 +93,9 @@
     </ApplicationDefinition>
     <Compile Include="AccessDB.cs" />
     <Compile Include="Actions\AppAction.cs" />
+    <Compile Include="Actions\MainAction.cs" />
+    <Compile Include="Actions\NewSeasonCountingAction.cs" />
+    <Compile Include="Actions\PutAdvertisementAction.cs" />
     <Compile Include="Actions\Types.cs" />
     <Compile Include="DashWindow.xaml.cs">
       <DependentUpon>DashWindow.xaml</DependentUpon>
@@ -295,6 +298,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="rdict\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="rdict\Enums.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

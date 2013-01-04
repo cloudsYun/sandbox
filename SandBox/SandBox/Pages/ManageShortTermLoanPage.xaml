@@ -41,14 +41,51 @@
 							短期贷款管理
 						</TextBlock>
 						<TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
-							贷款只能是20M的倍数,若在第六年年底仍有未还贷款，每1M未还贷款扣企业发展得分1分。
+                            <LineBreak/>
+                            <Grid ShowGridLines="False">  
+                                    <Grid.RowDefinitions>  
+                                        <RowDefinition Height="20" />  
+                                        <RowDefinition Height="20" />  
+                                    </Grid.RowDefinitions>  
+                                    <Grid.ColumnDefinitions>  
+                                        <ColumnDefinition/>  
+                                        <ColumnDefinition/>  
+                                        <ColumnDefinition/>  
+                                        <ColumnDefinition/> 
+                                        <ColumnDefinition Width="auto"/> 
+                                    </Grid.ColumnDefinitions>  
+                                    <TextBlock Text="  贷款类型  " Grid.Row="0" Grid.Column="0" />
+                                    <TextBlock Text="  贷款时间  " Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Text="  贷款额度  " Grid.Row="0" Grid.Column="2" />
+                                    <TextBlock Text="  年息  " Grid.Row="0" Grid.Column="3" />
+                                    <TextBlock Text="  还款方式  " Grid.Row="0" Grid.Column="4" />
+                                    <TextBlock Text="  短期贷款  " Grid.Row="1" Grid.Column="0" />
+                                    <TextBlock Text="  每季度初  " Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Text="  见说明  " Grid.Row="1" Grid.Column="2" />
+                                    <TextBlock Text="  5%  " Grid.Row="1" Grid.Column="3" />
+                                    <TextBlock Text="  到期时一次还本付息  " Grid.Row="1" Grid.Column="4" />
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="0"/>  
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="1"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="2"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="3"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="4"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="0"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="1"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="2"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="3"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="4"/>
+                                </Grid>
+                        <LineBreak/>
+                        说明：
+                        <LineBreak/>短期贷款只能是20M的倍数,贷款期限为一年。<LineBreak/>
+                        长短期贷款之和不得超过上一年所有者权益的三倍。
 						</TextBlock>
 					</StackPanel>
 				</ToolTip>
 			</Viewbox.ToolTip>
 		</Viewbox>
-
-		<Button x:Name="Next" Content="下一步"
+       
+        <Button x:Name="Next" Content="下一步"
 				Height="23" Width="45pt" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8"
 				Style="{StaticResource ButtonStyle_Common}"
 				Click="Next_Click"/>

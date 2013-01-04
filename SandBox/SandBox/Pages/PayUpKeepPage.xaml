@@ -24,9 +24,10 @@
 						支付设备维护费
 						</TextBlock>
 						<TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
+                        <LineBreak/>
 						任务清单上的这项工作是支付用于机器设备等等的维护/修理等费用。每条生产线的该费用为1M。只要年末厂房中有已经使用的生产线你必须支付维修费。<LineBreak/>
-                         <LineBreak/>
-                        本步系统自动完成。	
+                        <LineBreak/>
+                        这一步由系统自动完成。	
 						</TextBlock>
 					</StackPanel>
 				</ToolTip>

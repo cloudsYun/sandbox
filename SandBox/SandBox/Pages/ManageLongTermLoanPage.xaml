@@ -38,10 +38,47 @@
                 <ToolTip Foreground="White" Background="Black" Opacity="0.8" >
                     <StackPanel>
                         <TextBlock x:Name="Help_Title" MaxWidth="450" Height="auto" FontSize="12pt" Margin="0,0,0,4">
-							Title
+							长期贷款管理
                         </TextBlock>
                         <TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
-							Content
+                            <LineBreak/>
+                            <Grid ShowGridLines="False">  
+                                    <Grid.RowDefinitions>  
+                                        <RowDefinition Height="20" />  
+                                        <RowDefinition Height="20" />  
+                                    </Grid.RowDefinitions>  
+                                    <Grid.ColumnDefinitions>  
+                                        <ColumnDefinition/>  
+                                        <ColumnDefinition/>  
+                                        <ColumnDefinition/>  
+                                        <ColumnDefinition/> 
+                                        <ColumnDefinition Width="auto"/> 
+                                    </Grid.ColumnDefinitions>  
+                                    <TextBlock Text="  贷款类型  " Grid.Row="0" Grid.Column="0" />
+                                    <TextBlock Text="  贷款时间  " Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Text="  贷款额度  " Grid.Row="0" Grid.Column="2" />
+                                    <TextBlock Text="  年息  " Grid.Row="0" Grid.Column="3" />
+                                    <TextBlock Text="  还款方式  " Grid.Row="0" Grid.Column="4" />
+                                    <TextBlock Text="  长期贷款  " Grid.Row="1" Grid.Column="0" />
+                                    <TextBlock Text="  每年年末  " Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Text="  见说明  " Grid.Row="1" Grid.Column="2" />
+                                    <TextBlock Text="  10%  " Grid.Row="1" Grid.Column="3" />
+                                    <TextBlock Text="  每年年底支付利息，到期还本  " Grid.Row="1" Grid.Column="4" />
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="0"/>  
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="1"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="2"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="3"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="4"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="0"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="1"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="2"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="3"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="4"/>
+                                </Grid>
+                            <LineBreak/>
+                            说明：<LineBreak/>
+                            长期贷款只能是20M的倍数。贷款最长期限为5年。<LineBreak/>
+                            长短期贷款之和不得超过上一年所有者权益的三倍。
                         </TextBlock>
                     </StackPanel>
                 </ToolTip>

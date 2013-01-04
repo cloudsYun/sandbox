@@ -28,10 +28,13 @@
                 <ToolTip Foreground="White" Background="Black" Opacity="0.8" >
                     <StackPanel>
                         <TextBlock Width="auto" MaxWidth="450" Height="auto" FontSize="12pt" Margin="0,0,0,4">
-						Title
+						开始下批生产
                         </TextBlock>
                         <TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
-                        Content
+                        <LineBreak/>
+                        支付加工费，扣除原料。<LineBreak/>
+                        <LineBreak/>
+                        这一步由系统自动完成。
                         </TextBlock>
                     </StackPanel>
                 </ToolTip>
@@ -43,7 +46,7 @@
 				Style="{StaticResource ButtonStyle_Common}"
 				Click="Next_Click"/>
         
-        <TextBlock Height="19" Margin="62,114.082,141,0" TextWrapping="Wrap" Text="开始下一批生产" VerticalAlignment="Top"/>
+        <TextBlock Height="19" Margin="62,114.082,141,0" TextWrapping="Wrap" Text="开始下批生产" VerticalAlignment="Top"/>
         
     </Grid>
 </Page>

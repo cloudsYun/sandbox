@@ -48,38 +48,12 @@
 								P4产品被视为一个未来技术的产品，针对它，大家都存在着期望，然而它的市场何时才能形成是一个难题。<LineBreak/>
 							<LineBreak/>
 							市场：<LineBreak/>
-								本地市场针对P1产品的需求已经减弱，但是在不久的将来，仍然存在着对P1的不少需求。为了弥补这个市场的下降，新的市场或许存在着机遇。<LineBreak/>
-								开始阶段，或许可以在企业周边的区域（区域市场和国内市场），那里针对低技术产品（P1产品和P2产品）需求估计会很不错。这两个市场的需求量有很大的差别：以产品数量计，国内市场与本地市场相等，区域市场估计只有本地市场的一半。<LineBreak/>
-								亚洲市场的建立需要很长时间，大约为三年。因此针对其需求量的预测自然很不确定。这个市场被认为相当大，并且偏好高技术含量的产品。在这个市场上可以销售低技术产品，但是价格竞争会非常激烈。<LineBreak/>
-								进入国际市场可以在本期预测的时间段完成。这个市场估计会偏向于低技术产品，同时也存在着随机的可能性在后期可以销出技术更先进的产品。<LineBreak/>
+								本地：本地市场针对P1产品的需求已经减弱，但是在不久的将来，仍然存在着对P1的不少需求。为了弥补这个市场的下降，新的市场或许存在着机遇。<LineBreak/>
+								区域：开始阶段，或许可以在企业周边的区域（区域市场和国内市场），那里针对低技术产品（P1产品和P2产品）需求估计会很不错。这两个市场的需求量有很大的差别：以产品数量计，国内市场与本地市场相等，区域市场估计只有本地市场的一半。<LineBreak/>
+								亚洲：亚洲市场的建立需要很长时间，大约为三年。因此针对其需求量的预测自然很不确定。这个市场被认为相当大，并且偏好高技术含量的产品。在这个市场上可以销售低技术产品，但是价格竞争会非常激烈。<LineBreak/>
+								国际：进入国际市场可以在本期预测的时间段完成。这个市场估计会偏向于低技术产品，同时也存在着随机的可能性在后期可以销出技术更先进的产品。<LineBreak/>
 								进入一个市场意味着建立一些销售机构，它们可以销售企业所生产的产品。企业生产部分将永远不会移至国外。<LineBreak/>
 								预测显示的是市场上的全部需求量，也就是本地制造商可以得到的全部市场的份额。这个市场份额估计为全球市场需求量的10%，外国竞争者将分得剩余的90%。<LineBreak/>
-                            	<Grid ShowGridLines="False">  
-                                    <Grid.RowDefinitions>  
-                                        <RowDefinition Height="20" />  
-                                        <RowDefinition Height="20" />  
-                                        <RowDefinition Height="20" />  
-                                        <RowDefinition Height="20" />  
-                                        <RowDefinition Height="20" />  
-                                        <RowDefinition Height="20" />  
-                                    </Grid.RowDefinitions>  
-                                    <Grid.ColumnDefinitions>  
-                                        <ColumnDefinition/>  
-                                        <ColumnDefinition/>  
-                                        <ColumnDefinition/>  
-                                        <ColumnDefinition/> 
-                                        <ColumnDefinition/> 
-                                    </Grid.ColumnDefinitions>  
-                                    <TextBlock Text="贷款年限 " Grid.Row="0" Grid.Column="0" />
-                                    <TextBlock Text="贷款利率 " Grid.Row="0" Grid.Column="1" />
-                                    <TextBlock Text="1年  " Grid.Row="4" Grid.Column="0" />
-                                    <TextBlock Text="1M/年  " Grid.Row="1" Grid.Column="1" />
-                                    <Border BorderBrush="White" BorderThickness="1" Grid.Column="0" Grid.Row="0"/>  
-                                    <Border BorderBrush="White" BorderThickness="0,1,1,1" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"/>  
-                                    <Border BorderBrush="White" BorderThickness="1,0,1,1" Grid.Column="0" Grid.Row="1"/>  
-                                    <Border BorderBrush="White" BorderThickness="0,0,1,1" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"/>  
-                                    <Border BorderBrush="White" BorderThickness="1,0,1,1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2"/>  
-                                </Grid>
 
 						</TextBlock>
 					</StackPanel>

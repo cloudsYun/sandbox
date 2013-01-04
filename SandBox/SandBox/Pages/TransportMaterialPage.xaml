@@ -26,7 +26,8 @@
 							原材料入库
 						</TextBlock>
 						<TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
-							帮助内容
+							<LineBreak/>
+                            这一步由系统自动完成。
 						</TextBlock>
 					</StackPanel>
 				</ToolTip>

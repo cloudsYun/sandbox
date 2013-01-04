@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SandBox.Actions;
 
 namespace SandBox.Pages
 {
@@ -35,7 +36,7 @@ namespace SandBox.Pages
 			if (change[0].AddedLength > 0)
 			{
 				int num = 0;
-				if (!Int32.TryParse(TextBox_Amount.Text, out num))
+				if (!Int32.TryParse(textBox.Text, out num))
 				{
 					textBox.Text = textBox.Text.Remove(offset, change[0].AddedLength);
 					textBox.Select(offset, 0);
@@ -52,28 +53,30 @@ namespace SandBox.Pages
 			}
 		}
 
-		private void ConfirmAmount_Click(object sender, RoutedEventArgs e)
-		{
-			if (TextBox_Amount.Text == "")
-			{
-				return;
-			}
-
-			TextBox_Amount.IsReadOnly = true;
-			TextBox_Amount.Foreground = FindResource("SBBrush_Red") as Brush;
-			TextBox_Amount.BorderThickness = new Thickness(0);
-			TextBox_Amount.FontWeight = FontWeights.Bold;
-			ConfirmAmount.Visibility = Visibility.Hidden;
-		}
-
 		private void Next_Click(object sender, RoutedEventArgs e)
 		{
-			if (!TextBox_Amount.IsReadOnly)
+			if (TextBox_Amount.Text == "")
 			{ 
 				(App.Current as App).action.WarningBox("请输入金额并确认");
 				return;
 			}
-			
+
+            int year = (int)(App.Current as App).action.year;
+            int season = (int)(App.Current as App).action.season;
+            season = MainAction.ConvertSeason(season);
+            NewSeasonCountingAction newSeasonCountingAction = new NewSeasonCountingAction((App.Current as App).accessDB, year, season);
+            if (year == 1 && season == 1)
+            {
+                newSeasonCountingAction.setInitSeasonCash();
+            }
+            else
+            {
+                newSeasonCountingAction.setNewSeasonCash();
+            }
+            
+            PutAdvertisementAction putAdvertisementAction = new PutAdvertisementAction((App.Current as App).accessDB, year, season);
+            putAdvertisementAction.subtracteAdvertisement(TextBox_Amount.Text);
+
 			(App.Current as App).action.Update();
 		}
 

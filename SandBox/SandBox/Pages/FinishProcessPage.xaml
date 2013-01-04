@@ -60,8 +60,10 @@
 							更新生产
 						</TextBlock>
 						<TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
-							所有生产线上的在产品，都向前移动一步。如果产品已完工，它将移到相应产成品库中。
-							本步系统自动完成，请在控制面板查看各厂房生产线的详细信息。
+                            <LineBreak/>
+							所有生产线上的在产品，都向前移动一步。如果产品已完工，它将移到相应产成品库中。<LineBreak/>
+                            <LineBreak/>
+							这一步由系统自动完成，请在控制面板查看各厂房生产线的详细信息。
 						</TextBlock>
 					</StackPanel>
 				</ToolTip>

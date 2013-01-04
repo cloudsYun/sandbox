@@ -24,10 +24,11 @@
 						计提折旧
 						</TextBlock>
 						<TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
+                        <LineBreak/>
 						年度折旧反映为机器设备价值的降低。<LineBreak/>
 						采用余额递减法折旧率为33%(四舍五入取整)。当设备的价值将少于3M时，每年折旧以1M计，再建生产线、厂房不计提折旧。<LineBreak/>
 						<LineBreak/>
- 						本步系统自动完成。
+ 						这一步由系统自动完成。
 						</TextBlock>
 					</StackPanel>
 				</ToolTip>

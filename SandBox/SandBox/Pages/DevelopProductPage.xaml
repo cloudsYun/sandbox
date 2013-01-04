@@ -43,10 +43,65 @@
                 <ToolTip Foreground="White" Background="Black" Opacity="0.8" >
                     <StackPanel>
                         <TextBlock Width="auto" MaxWidth="450" Height="auto" FontSize="12pt" Margin="0,0,0,4">
-							Title
+							新产品研发投资
                         </TextBlock>
                         <TextBlock x:Name="Help_Content" Width="auto" MaxWidth="450" Height="auto" TextWrapping="Wrap">
-							Content
+                            <LineBreak/>
+							请选择本季度打算投入资金进行开发的产品。<LineBreak/>
+                            <LineBreak/>
+                            <Grid ShowGridLines="False">  
+                                    <Grid.RowDefinitions>  
+                                        <RowDefinition Height="20" />  
+                                        <RowDefinition Height="20" />  
+                                        <RowDefinition Height="20" />  
+                                        <RowDefinition Height="20" />  
+                                    </Grid.RowDefinitions>  
+                                    <Grid.ColumnDefinitions>  
+                                        <ColumnDefinition/>  
+                                        <ColumnDefinition/>  
+                                        <ColumnDefinition/>  
+                                        <ColumnDefinition/> 
+                                        <ColumnDefinition Width="auto"/> 
+                                    </Grid.ColumnDefinitions>  
+                                    <TextBlock Text="  产品类型  " Grid.Row="0" Grid.Column="0" />
+                                    <TextBlock Text="  研发投入  " Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Text="  研发周期  " Grid.Row="0" Grid.Column="2" />
+                                    <TextBlock Text="  每季度研发投入  " Grid.Row="0" Grid.Column="3" />
+                                    <TextBlock Text="  P2  " Grid.Row="1" Grid.Column="0" />
+                                    <TextBlock Text="  5M  " Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Text="  5Q  " Grid.Row="1" Grid.Column="2" />
+                                    <TextBlock Text="  1M  " Grid.Row="1" Grid.Column="3" />
+                                    <TextBlock Text="  P3  " Grid.Row="2" Grid.Column="0" />
+                                    <TextBlock Text="  12M  " Grid.Row="2" Grid.Column="1" />
+                                    <TextBlock Text="  6Q  " Grid.Row="2" Grid.Column="2" />
+                                    <TextBlock Text="  2M  " Grid.Row="2" Grid.Column="3" />
+                                    <TextBlock Text="  P4  " Grid.Row="3" Grid.Column="0" />
+                                    <TextBlock Text="  18M  " Grid.Row="3" Grid.Column="1" />
+                                    <TextBlock Text="  6Q  " Grid.Row="3" Grid.Column="2" />
+                                    <TextBlock Text="  3M  " Grid.Row="3" Grid.Column="3" />                                
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="0"/>  
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="1"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="2"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.Column="3"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="0"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="1"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="2"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.Column="3"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="2" Grid.Column="0"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="2" Grid.Column="1"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="2" Grid.Column="2"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="2" Grid.Column="3"/>    
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="3" Grid.Column="0"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="3" Grid.Column="1"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="3" Grid.Column="2"/>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Row="3" Grid.Column="3"/>                                
+                                </Grid>
+                           <LineBreak/>
+                           规则说明：<LineBreak/>
+                            （1）每个产品的研发都必须按照研发周期分别投入，不允许一次性投入。<LineBreak/>
+                            （2）各产品的研发投入相互独立，可同时进行。<LineBreak/>
+                            （3）资金不足时可随时中断或终止。<LineBreak/>
+                            （4）全部投资完成后的下一季度方可开始生产该产品。<LineBreak/>
                         </TextBlock>
                     </StackPanel>
                 </ToolTip>

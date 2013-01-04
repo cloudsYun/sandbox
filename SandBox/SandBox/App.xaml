@@ -11,6 +11,7 @@
 				<ResourceDictionary Source="rdict/Brushes.xaml"/>
 				<ResourceDictionary Source="rdict/ButtonStyles.xaml"/>
 				<ResourceDictionary Source="rdict/Strings.xaml"/>
+				<ResourceDictionary Source="rdict/Enums.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

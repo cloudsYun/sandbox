@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -30,13 +31,13 @@ namespace SandBox.Actions
 		国际市场
 	}
 
-	public class Quotation 
+	public class Order
 	{
-		public Product 产品类型 { get; set; }
 		public Market 市场类型 { get; set; }
-		public String 所需数量 { get; set; }
-		public String 订单账期 { get; set; }
+		public Product 产品类型 { get; set; }
+		public String 订购数量 { get; set; }
 		public String 订单总价 { get; set; }
+		public String 订单账期 { get; set; }
 	}
 	
 }

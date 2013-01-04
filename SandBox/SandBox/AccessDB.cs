@@ -474,7 +474,7 @@ namespace SandBox
 
             if (datatable.Rows.Count == 0)//无该现金值
             {
-                return "No";
+                return "-1";
             }
             else//返回现金值
             {

@@ -12,10 +12,12 @@ namespace SandBox
 	public partial class App : Application
 	{
 		public Actions.AppAction action;
+        public AccessDB accessDB;
 
 		public App()
 		{ 
 			action = new Actions.AppAction();
+            accessDB = new AccessDB();
 		}
 	}
 
