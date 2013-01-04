@@ -23,6 +23,15 @@ namespace SandBox
 			InitializeComponent();
 		}
 
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			Actions.AppAction action = (App.Current as App).action;
+
+			TextBlock_UserName.Text = action.name;
+			Role_Image_Player.Visibility = (action.role == Actions.AppAction.Role.Player) ? Visibility.Visible : Visibility.Hidden;
+			Role_Image_Admin.Visibility = (action.role == Actions.AppAction.Role.Admin) ? Visibility.Visible : Visibility.Hidden;
+		}
+
 		public void DragWindow(object sender, MouseButtonEventArgs args)
 		{
 			this.DragMove();

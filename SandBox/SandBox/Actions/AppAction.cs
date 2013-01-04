@@ -343,7 +343,5 @@ namespace SandBox.Actions
 		{
 			Warning_Event(str);
 		}
-
-
 	}
 }

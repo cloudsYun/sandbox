@@ -91,7 +91,7 @@ namespace SandBox
 		private void Button_Dash_Click(object sender, RoutedEventArgs e)
 		{
 			DashWindow win = new DashWindow();
-			win.Show();
+			win.ShowDialog();
 		}
 
 		private void Bgm_Initialize(object sender, EventArgs e)
