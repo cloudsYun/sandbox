@@ -32,18 +32,24 @@ namespace SandBox.Pages
 			season = MainAction.ConvertSeason(season);
 			shortTermLoanAction = new ShortTermLoanAction((App.Current as App).accessDB, year, season, (App.Current as App).action.name);
 			DataTable shortTermLoan = new DataTable();
-			//shortTermLoan = shortTermLoanAction.getShortTermLoan(); //获得已有的贷款数据
+			shortTermLoan = shortTermLoanAction.getShortTermLoan(); //获得已有的贷款数据
+            shortLoanInfoDataGrid.ItemsSource = shortTermLoan.DefaultView;
 			//处理，显示
 			if (season != 1)
 			{
 				NewSeasonCountingAction newSeasonCountingAction = new NewSeasonCountingAction((App.Current as App).accessDB, year, season, (App.Current as App).action.name);
-
 				newSeasonCountingAction.setNewSeasonCash();
 			}
+            int n = shortTermLoanAction.updateShortTermLoan();
+            if (n == 0)
+            {
+                (App.Current as App).action.WarningBox("没有做够的资金,企业破产");
+            }
         }
 
 		private void Next_Click(object sender, RoutedEventArgs e)
 		{
+            shortTermLoanAction.addNewShortTermLoan("20");
 			(App.Current as App).action.Update();
 		}
     }

@@ -33,8 +33,8 @@ namespace SandBox.Actions
             {
                 return false;
             }
-			
-			// !!!
+
+            setCash((cash - money).ToString()); //从余额中减去
 
             for (int i = 0; i < materialOrder.Rows.Count; i++)
             {
@@ -46,7 +46,7 @@ namespace SandBox.Actions
         }
 
 
-        public void addMaterialOrders(DataTable newOrders)
+        public void addMaterialOrders(DataTable newOrders)  //加入新订单
         {
             db.addMaterial(newOrders);
         }

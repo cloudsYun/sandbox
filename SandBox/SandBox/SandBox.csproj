@@ -94,12 +94,14 @@
     <Compile Include="AccessDB.cs" />
     <Compile Include="Actions\AppAction.cs" />
     <Compile Include="Actions\DeliveryProductAction.cs" />
+    <Compile Include="Actions\DevelopProductAction.cs" />
     <Compile Include="Actions\EnterOrderAction.cs" />
     <Compile Include="Actions\FinishProcessAction.cs" />
     <Compile Include="Actions\GatheringAction.cs" />
     <Compile Include="Actions\MainAction.cs" />
     <Compile Include="Actions\NewSeasonCountingAction.cs" />
     <Compile Include="Actions\PayDutyAction.cs" />
+    <Compile Include="Actions\PayExpenseAction.cs" />
     <Compile Include="Actions\PutAdvertisementAction.cs" />
     <Compile Include="Actions\ShortTermLoanAction.cs" />
     <Compile Include="Actions\TransportMaterialAction.cs" />

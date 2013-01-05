@@ -23,6 +23,7 @@ namespace SandBox.Actions
             int cash = getCash();
             if (af > cash)
             {
+                (App.Current as App).action.WarningBox("投入广告费过多");
                 return false;
             }
             cash = cash - af;

@@ -48,10 +48,77 @@ namespace SandBox.Actions
             }
             return 2;
         }
-        public bool addNewShortTermLoan(DataTable ServiceInfo) //申请短期贷款
+        public bool addNewShortTermLoan(string shortFee) //申请短期贷款
         {
             //筹资类型，用户编号，筹资年份，筹资季度，筹资金额，是否结清，已过周期，还款周期
-            return db.addFinanciServiceInfo(ServiceInfo);
+            DataTable ServiceInfo = new DataTable();
+            DataColumn column;
+            DataRow row;
+            //
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "筹资类型";
+            ServiceInfo.Columns.Add(column);
+            //
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "用户编号";
+            ServiceInfo.Columns.Add(column);
+            //
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "筹资年份";
+            ServiceInfo.Columns.Add(column);
+            //
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "筹资季度";
+            ServiceInfo.Columns.Add(column);
+            //
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "筹资金额";
+            ServiceInfo.Columns.Add(column);
+            //
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "是否结清";
+            ServiceInfo.Columns.Add(column);
+            //
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "已过周期";
+            ServiceInfo.Columns.Add(column);
+            //
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "还款周期";
+            ServiceInfo.Columns.Add(column);
+            
+            // !!!
+           
+                row = ServiceInfo.NewRow();
+                row["筹资类型"] = "短期贷款";
+                row["用户编号"] = useNum;
+                row["筹资年份"] = year;
+                row["筹资季度"] = season;
+                row["筹资金额"] = shortFee;
+                row["是否结清"] = 0;
+                row["已过周期"] = 0;
+                row["还款周期"] = 4;
+                ServiceInfo.Rows.Add(row);
+
+
+
+
+                if (db.addFinanciServiceInfo(ServiceInfo))
+                {
+                    int cash = getCash();
+                    int remainCash = (cash + int.Parse(shortFee));
+                    (App.Current as App).action.WarningBox(remainCash.ToString());
+                    return setCash(remainCash.ToString());
+                }
+                return false;
         }
 
     }

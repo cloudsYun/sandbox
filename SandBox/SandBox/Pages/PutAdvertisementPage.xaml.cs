@@ -66,7 +66,10 @@ namespace SandBox.Pages
 			season = MainAction.ConvertSeason(season);
 
 			PutAdvertisementAction putAdvertisementAction = new PutAdvertisementAction((App.Current as App).accessDB, year, season, (App.Current as App).action.name);
-			putAdvertisementAction.subtracteAdvertisement(TextBox_Amount.Text);
+            if (!putAdvertisementAction.subtracteAdvertisement(TextBox_Amount.Text))
+            {
+                return;
+            }
 			(App.Current as App).action.Update();
 		}
 

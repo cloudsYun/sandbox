@@ -8,7 +8,7 @@
 	Title="短期贷款管理">
 
     <Grid>
-    	<DataGrid Margin="35,51.333,34,143"/>
+    	<DataGrid x:Name="shortLoanInfoDataGrid" Margin="35,51.333,34,143"/>
 
     	<TextBlock HorizontalAlignment="Left" Height="25.333" Margin="35,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" FontSize="13.333"><Run Language="zh-cn" Text="短期贷款信息"/></TextBlock>
     	<Grid Height="47" Margin="0,0,8,48" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="284">
